@@ -53,6 +53,7 @@ def create_payment(
         payment_link_id=payment_link.id,
         amount=data.amount,
         currency=data.currency,
+         idempotency_key=data.idempotency_key,
     )
 
     db.add(payment)
