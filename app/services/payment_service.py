@@ -60,3 +60,15 @@ def create_payment(
     db.refresh(payment)
 
     return payment
+
+
+# payment confirmation 
+def confirm_payment(
+    db: Session,
+    payment_id: str,
+) -> Payment:
+    payment = (
+        db.query(Payment)
+        .filter(Payment.id == payment_id)
+        .first()
+    )
