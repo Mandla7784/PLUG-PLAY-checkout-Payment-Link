@@ -38,3 +38,21 @@ class PaymentLinkCreate(BaseModel):
     @classmethod
     def validate_currency(cls, value: str) -> str:
         return value.upper()
+    
+    
+    
+    # response schema for payment link creation
+    
+class PaymentLinkResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    product_name: str
+    description: str | None
+    amount: Decimal
+    currency: str
+    token: str
+    payment_url: str
+    status: str
+    expires_at: datetime
+    created_at: datetime
