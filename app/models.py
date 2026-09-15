@@ -9,7 +9,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from .database import Base
 
-
+ #maping all the fields in the database to the model class PaymentLink
 class PaymentLinkStatus(str, enum.Enum):
     ACTIVE = "ACTIVE"
     EXPIRED = "EXPIRED"
