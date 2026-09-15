@@ -97,6 +97,18 @@ class Payment(Base):
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
     )
+      
+      
+    idempotency_key: Mapped[str] = mapped_column(
+    String(64),
+    unique=True,
+    index=True,
+    nullable=False,
+)
+    
+    
+    
+    
 
     payment_link_id: Mapped[str] = mapped_column(
         String(36),
