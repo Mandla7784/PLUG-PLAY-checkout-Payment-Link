@@ -58,14 +58,7 @@ class PaymentLinkResponse(BaseModel):
     created_at: datetime
     
     
-    
-    
-    
-    
-    
-    
-    # Payment request / respinse schemas 
-    
+    # Payment request / respinse schemas   
 class PaymentCreate(BaseModel):
     payment_link_token: str = Field(
         min_length=1,

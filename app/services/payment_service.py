@@ -1,0 +1,30 @@
+from sqlalchemy.orm import Session
+
+from ..models import Payment, PaymentLink
+from ..schemas import PaymentCreate
+
+
+def create_payment(
+    db: Session,
+    data: PaymentCreate,
+) -> Payment:
+    payment_link = (
+        db.query(PaymentLink)
+        .filter(PaymentLink.token == data.payment_link_token)
+        .first()
+    )
+
+    if not payment_link:
+        raise ValueError("Payment link not found")
+
+    payment = Payment(
+        payment_link_id=payment_link.id,
+        amount=data.amount,
+        currency=data.currency,
+    )
+
+    db.add(payment)
+    db.commit()
+    db.refresh(payment)
+
+    return payment
