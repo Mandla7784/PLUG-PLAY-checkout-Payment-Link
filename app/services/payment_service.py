@@ -25,6 +25,10 @@ def create_payment(
     
     
     # 3. Check if the payment link is already expired
+    
+    if payment_link.status == PaymentLinkStatus.EXPIRED:
+        raise ValueError("Payment link has already been expired")
+
 
     payment = Payment(
         payment_link_id=payment_link.id,
