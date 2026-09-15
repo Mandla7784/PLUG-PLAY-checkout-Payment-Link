@@ -25,10 +25,10 @@ def health_check():
 
 app.include_router(
     payment_links_router,
-    prefix="/api",
+    prefix="/api/v1",
 )
 
 app.include_router(
     payments_router,
-    prefix="/api",
+    prefix="/api/v1",
 )
