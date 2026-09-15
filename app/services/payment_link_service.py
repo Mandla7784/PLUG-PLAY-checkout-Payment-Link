@@ -17,3 +17,26 @@ from ..schemas import PaymentLinkCreate
 
 #function to create payment link
 
+
+def create_payment_link(
+    db: Session,
+    data: PaymentLinkCreate,
+) -> PaymentLink:
+    expires_at = datetime.now(timezone.utc) + timedelta(
+        minutes=data.expires_in_minutes
+    )
+
+    payment_link = PaymentLink(
+        product_name=data.product_name,
+        description=data.description,
+        amount=data.amount,
+        currency=data.currency,
+        token=secrets.token_urlsafe(12),
+        expires_at=expires_at,
+    )
+
+    db.add(payment_link)
+    db.commit()
+    db.refresh(payment_link)
+
+    return payment_link
