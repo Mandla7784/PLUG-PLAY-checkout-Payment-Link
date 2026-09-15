@@ -42,11 +42,11 @@ def create_payment(
 
     # 5. Make sure payment amount matches the payment link
     if data.amount != payment_link.amount:
-        raise ValueError("Payment amount does not match payment link")
+        raise ValueError("Payment amount does not match payment link's amount ")
 
     # 6. Make sure currency matches
     if data.currency != payment_link.currency:
-        raise ValueError("Payment currency does not match payment link")
+        raise ValueError("Payment currency does not match payment link's currency")
 
     # 7. Create payment
     payment = Payment(
