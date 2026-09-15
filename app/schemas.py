@@ -60,6 +60,15 @@ class PaymentLinkResponse(BaseModel):
     
     # Payment request / respinse schemas   
 class PaymentCreate(BaseModel):
+    
+    
+    idempotency_key: str = Field(
+    min_length=1,
+    max_length=64,
+)
+    
+    
+    
     payment_link_token: str = Field(
         min_length=1,
         max_length=32,
