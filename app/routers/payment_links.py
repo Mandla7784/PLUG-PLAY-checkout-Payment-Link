@@ -5,6 +5,8 @@ from ..database import get_db
 from ..schemas import PaymentLinkCreate, PaymentLinkResponse
 from ..services.payment_link_service import create_payment_link
 
+
+
 from datetime import datetime, timezone
 
 from ..models import PaymentLink
@@ -16,8 +18,8 @@ from ..schemas import (
     PaymentLinkResponse,
     PaymentResponse,
 )
-from ..services.payment_service import create_payment
 
+from ..services.payment_service import create_payment, confirm_payment
 
 
 router = APIRouter(
@@ -120,6 +122,33 @@ def create_payment_endpoint(
     except ValueError as error:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(error),
+        )
+
+    return PaymentResponse(
+        id=payment.id,
+        payment_link_id=payment.payment_link_id,
+        amount=payment.amount,
+        currency=payment.currency,
+        status=payment.status.value,
+        created_at=payment.created_at,
+    )
+    
+    
+    
+@router.post(
+    "/payments/{payment_id}/confirm",
+    response_model=PaymentResponse,
+)
+def confirm_payment_endpoint(
+    payment_id: str,
+    db: Session = Depends(get_db),
+):
+    try:
+        payment = confirm_payment(db, payment_id)
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(error),
         )
 
