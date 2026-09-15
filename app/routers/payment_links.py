@@ -120,11 +120,27 @@ def create_payment_endpoint(
     try:
         payment = create_payment(db, data)
     except ValueError as error:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=str(error),
-        )
+        message = str(error)
 
+        if message == "Payment link not found":
+            status_code = status.HTTP_404_NOT_FOUND
+
+        elif message == "Payment link has expired":
+            status_code = status.HTTP_410_GONE
+
+        elif message == "Payment link has already been paid":
+            status_code = status.HTTP_409_CONFLICT
+
+        else:
+            status_code = status.HTTP_400_BAD_REQUEST
+
+        raise HTTPException(
+            status_code=status_code,
+            detail=message,
+        )
+        
+        
+        
     return PaymentResponse(
         id=payment.id,
         payment_link_id=payment.payment_link_id,
