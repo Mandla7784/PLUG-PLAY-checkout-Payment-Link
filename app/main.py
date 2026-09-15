@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from .database import Base, engine
 from .routers.payment_links import router as payment_links_router
 
+from .routers.payments import router as payments_router
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -24,5 +25,10 @@ def health_check():
 
 app.include_router(
     payment_links_router,
+    prefix="/api",
+)
+
+app.include_router(
+    payments_router,
     prefix="/api",
 )
