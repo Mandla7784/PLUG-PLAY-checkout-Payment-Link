@@ -17,6 +17,11 @@ def create_payment(
     if not payment_link:
         raise ValueError("Payment link not found")
 
+   # 2. Check if the payment link is already paid
+    if payment_link.status == PaymentLinkStatus.PAID:
+        raise ValueError("Payment link has already been paid")
+
+
     payment = Payment(
         payment_link_id=payment_link.id,
         amount=data.amount,

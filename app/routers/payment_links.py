@@ -103,11 +103,7 @@ def get_payment_link(
         expires_at=payment_link.expires_at,
         created_at=payment_link.created_at,
     )
-    
-    
-    
-    
-    
+ 
 #  payment endpoint 
 
 @router.post(
