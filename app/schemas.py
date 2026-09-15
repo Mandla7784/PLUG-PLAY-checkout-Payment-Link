@@ -56,3 +56,45 @@ class PaymentLinkResponse(BaseModel):
     status: str
     expires_at: datetime
     created_at: datetime
+    
+    
+    
+    
+    
+    
+    
+    
+    # Payment request / respinse schemas 
+    
+class PaymentCreate(BaseModel):
+    payment_link_token: str = Field(
+        min_length=1,
+        max_length=32,
+    )
+
+    amount: Decimal = Field(
+        gt=0,
+        max_digits=12,
+        decimal_places=2,
+    )
+
+    currency: str = Field(
+        min_length=3,
+        max_length=3,
+    )
+
+    @field_validator("currency")
+    @classmethod
+    def validate_currency(cls, value: str) -> str:
+        return value.upper()
+
+
+class PaymentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    payment_link_id: str
+    amount: Decimal
+    currency: str
+    status: str
+    created_at: datetime
