@@ -29,6 +29,19 @@ def create_payment(
     if payment_link.status == PaymentLinkStatus.EXPIRED:
         raise ValueError("Payment link has already been expired")
 
+ # 4. Check expiration time
+    expires_at = payment_link.expires_at
+
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+
+    if expires_at < datetime.now(timezone.utc):
+        payment_link.status = PaymentLinkStatus.EXPIRED
+        db.commit()
+
+        raise ValueError("Payment link has expired")
+
+
 
     payment = Payment(
         payment_link_id=payment_link.id,
