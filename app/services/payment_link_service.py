@@ -4,3 +4,16 @@
 #creates the payment link
 #saves it to SQLite
 #returns the created record
+
+import secrets
+from datetime import datetime, timedelta, timezone
+
+from sqlalchemy.orm import Session
+
+from ..models import PaymentLink
+from ..schemas import PaymentLinkCreate
+
+
+
+#function to create payment link
+
