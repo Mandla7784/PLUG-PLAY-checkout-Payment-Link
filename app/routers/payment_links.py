@@ -103,3 +103,35 @@ def get_payment_link(
         expires_at=payment_link.expires_at,
         created_at=payment_link.created_at,
     )
+    
+    
+    
+    
+    
+#  payment endpoint 
+
+@router.post(
+    "/payments",
+    response_model=PaymentResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def create_payment_endpoint(
+    data: PaymentCreate,
+    db: Session = Depends(get_db),
+):
+    try:
+        payment = create_payment(db, data)
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(error),
+        )
+
+    return PaymentResponse(
+        id=payment.id,
+        payment_link_id=payment.payment_link_id,
+        amount=payment.amount,
+        currency=payment.currency,
+        status=payment.status.value,
+        created_at=payment.created_at,
+    )
