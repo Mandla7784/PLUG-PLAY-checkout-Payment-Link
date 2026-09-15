@@ -10,6 +10,22 @@ def create_payment(
     db: Session,
     data: PaymentCreate,
 ) -> Payment:
+    
+    
+    
+    existing_payment = (
+    db.query(Payment)
+    .filter(Payment.idempotency_key == data.idempotency_key)
+    .first()
+)
+
+    if existing_payment:
+        return existing_payment
+    
+    
+    
+    
+    
     payment_link = (
         db.query(PaymentLink)
         .filter(PaymentLink.token == data.payment_link_token)
