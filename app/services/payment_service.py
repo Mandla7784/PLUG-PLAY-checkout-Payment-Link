@@ -42,6 +42,15 @@ def create_payment(
         raise ValueError("Payment link has expired")
 
 
+  # 5. Make sure payment amount matches the payment link
+    if data.amount != payment_link.amount:
+        raise ValueError("Payment amount does not match payment link")
+
+    # 6. Make sure currency matches
+    if data.currency != payment_link.currency:
+        raise ValueError("Payment currency does not match payment link")
+
+
 
     payment = Payment(
         payment_link_id=payment_link.id,
