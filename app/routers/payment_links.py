@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
+from ..models import PaymentLink, PaymentLinkStatus
 from ..database import get_db
 from ..schemas import PaymentLinkCreate, PaymentLinkResponse
 from ..services.payment_link_service import create_payment_link
@@ -62,6 +62,19 @@ def get_payment_link(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Payment link not found",
         )
+        
+        
+    if payment_link.expires_at < datetime.now(timezone.utc):
+        payment_link.status = PaymentLinkStatus.EXPIRED
+        db.commit()
+
+        raise HTTPException(
+            status_code=status.HTTP_410_GONE,
+            detail="Payment link has expired",
+        )
+            
+        
+        
 
     return PaymentLinkResponse(
         id=payment_link.id,
