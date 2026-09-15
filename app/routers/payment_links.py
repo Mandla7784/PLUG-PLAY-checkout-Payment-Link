@@ -63,8 +63,12 @@ def get_payment_link(
             detail="Payment link not found",
         )
         
-        
-    if payment_link.expires_at < datetime.now(timezone.utc):
+    expires_at = payment_link.expires_at
+
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+
+    if expires_at < datetime.now(timezone.utc):
         payment_link.status = PaymentLinkStatus.EXPIRED
         db.commit()
 
@@ -73,7 +77,6 @@ def get_payment_link(
             detail="Payment link has expired",
         )
             
-        
         
 
     return PaymentLinkResponse(
