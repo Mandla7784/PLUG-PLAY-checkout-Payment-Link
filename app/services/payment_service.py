@@ -18,10 +18,17 @@ def create_payment(
     .filter(Payment.idempotency_key == data.idempotency_key)
     .first()
 )
-
     if existing_payment:
-        return existing_payment
-    
+        if (
+            existing_payment.payment_link_id == payment_link.id
+            and existing_payment.amount == data.amount
+            and existing_payment.currency == data.currency
+        ):
+            return existing_payment
+
+        raise ValueError(
+            "Idempotency key has already been used for a different payment"
+        )
     
     payment_link = (
         db.query(PaymentLink)
