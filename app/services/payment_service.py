@@ -23,9 +23,6 @@ def create_payment(
         return existing_payment
     
     
-    
-    
-    
     payment_link = (
         db.query(PaymentLink)
         .filter(PaymentLink.token == data.payment_link_token)
