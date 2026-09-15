@@ -112,6 +112,14 @@ def get_payment_link(
     "/payments",
     response_model=PaymentResponse,
     status_code=status.HTTP_201_CREATED,
+    
+    
+      responses={
+        400: {"description": "Invalid payment details"},
+        404: {"description": "Payment link not found"},
+        409: {"description": "Payment link has already been paid"},
+        410: {"description": "Payment link has expired"},
+    },
 )
 def create_payment_endpoint(
     data: PaymentCreate,
