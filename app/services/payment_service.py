@@ -13,11 +13,26 @@ def create_payment(
     
     
     
+
+
+    payment_link = (
+        db.query(PaymentLink)
+        .filter(PaymentLink.token == data.payment_link_token)
+        .first()
+    )
+
+    # 1. Checked that the payment link exists
+    if not payment_link:
+        raise ValueError("Payment link not found")
+
+
+
     existing_payment = (
-    db.query(Payment)
-    .filter(Payment.idempotency_key == data.idempotency_key)
-    .first()
-)
+        db.query(Payment)
+        .filter(Payment.idempotency_key == data.idempotency_key)
+        .first()
+    )
+
     if existing_payment:
         if (
             existing_payment.payment_link_id == payment_link.id
@@ -29,16 +44,9 @@ def create_payment(
         raise ValueError(
             "Idempotency key has already been used for a different payment"
         )
-    
-    payment_link = (
-        db.query(PaymentLink)
-        .filter(PaymentLink.token == data.payment_link_token)
-        .first()
-    )
 
-    # 1. Checked that the payment link exists
-    if not payment_link:
-        raise ValueError("Payment link not found")
+
+
 
     # 2. Checked if the payment link is already paid
     if payment_link.status == PaymentLinkStatus.PAID:

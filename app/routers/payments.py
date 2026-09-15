@@ -41,6 +41,8 @@ def create_payment_endpoint(
 
         elif message == "Payment link has already been paid":
             status_code = status.HTTP_409_CONFLICT
+        elif message == "Idempotency key has already been used for a different payment":
+            status_code = status.HTTP_409_CONFLICT
 
         else:
             status_code = status.HTTP_400_BAD_REQUEST
