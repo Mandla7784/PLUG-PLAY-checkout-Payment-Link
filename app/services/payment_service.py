@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 
 from ..models import Payment, PaymentLink, PaymentLinkStatus
 from ..schemas import PaymentCreate
+
+
 def create_payment(
     db: Session,
     data: PaymentCreate,
@@ -14,22 +16,19 @@ def create_payment(
         .first()
     )
 
+    # 1. Checked that the payment link exists
     if not payment_link:
         raise ValueError("Payment link not found")
 
-   # 2. Check if the payment link is already paid
+    # 2. Checked if the payment link is already paid
     if payment_link.status == PaymentLinkStatus.PAID:
         raise ValueError("Payment link has already been paid")
-    
-    
-    
-    
-    # 3. Check if the payment link is already expired
-    
-    if payment_link.status == PaymentLinkStatus.EXPIRED:
-        raise ValueError("Payment link has already been expired")
 
- # 4. Check expiration time
+    # 3. Check if the payment link is already expired
+    if payment_link.status == PaymentLinkStatus.EXPIRED:
+        raise ValueError("Payment link has expired")
+
+    # 4. Checked expiration time
     expires_at = payment_link.expires_at
 
     if expires_at.tzinfo is None:
@@ -41,8 +40,7 @@ def create_payment(
 
         raise ValueError("Payment link has expired")
 
-
-  # 5. Make sure payment amount matches the payment link
+    # 5. Make sure payment amount matches the payment link
     if data.amount != payment_link.amount:
         raise ValueError("Payment amount does not match payment link")
 
@@ -50,8 +48,7 @@ def create_payment(
     if data.currency != payment_link.currency:
         raise ValueError("Payment currency does not match payment link")
 
-
-
+    # 7. Create payment
     payment = Payment(
         payment_link_id=payment_link.id,
         amount=data.amount,
