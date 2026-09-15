@@ -1,30 +1,116 @@
-# PLUG-PLAY Checkout Payment Link
+# LinkSecure Pay
 
-A plug-and-play checkout and payment-link API that allows merchants to integrate payment functionality into their applications using secure API keys.
+> Secure payment links for buying and selling through WhatsApp.
 
-The project is being designed as an API-first payment platform with a focus on secure authentication, checkout sessions, payment processing, idempotency, webhooks, and scalable backend architecture.
+**Built by Mandla Dyonase**
 
-## Tech Stack
+---
 
-* **Python** — Backend development
-* **FastAPI** — REST API framework
-* **PostgreSQL** — Persistent relational database
-* **Redis** — Caching, rate limiting, sessions, and idempotency support
-* **SQLAlchemy** — Database ORM
-* **Alembic** — Database migrations
-* **Pytest** — Automated testing
-* **Docker** — Containerisation and local development
-* **OpenAPI / Swagger** — API documentation
+## Case Study
 
-## Basic Concept
+LinkSecure Pay is a fintech prototype designed to make it easier for
+small businesses and individuals to accept payments through WhatsApp.
 
-Merchants will be able to:
+The concept focuses on a simple flow:
 
-* Create and manage checkout sessions
-* Generate payment links
-* Authenticate using API keys
-* Accept customer payment requests
-* Receive payment status updates through webhooks
-* Safely retry requests using idempotency keys
+**Create a secure payment link → Share it on WhatsApp → Customer pays**
 
-The goal is to build a realistic, production-oriented backend that demonstrates modern API design, payment-system concepts, security, reliability, and scalable architecture.
+### The Problem
+
+In communities such as Khayelitsha, many small businesses already use
+WhatsApp to communicate with customers and sell products.
+
+However, collecting payments can introduce friction:
+
+- Sharing bank details manually
+- Increased risk of exposing sensitive payment information
+- No simple payment flow inside the sales conversation
+- Limited access to convenient digital payment tools
+- Difficulty providing customers with a clear payment confirmation
+
+### The Solution
+
+LinkSecure Pay introduces a secure, unique payment link that can be
+shared directly through WhatsApp.
+
+Instead of sending banking information through a chat, the seller sends
+the customer a dedicated payment link containing the payment request.
+
+The customer opens the link, completes the payment, and receives
+confirmation.
+
+---
+
+## How It Works
+
+### 1. Create a Payment Link
+
+The seller creates a payment request containing the product and amount.
+
+### 2. Share Through WhatsApp
+
+The generated payment link is sent to the customer through WhatsApp.
+
+### 3. Customer Pays
+
+The customer opens the link and completes the payment through the
+secure payment flow.
+
+### 4. Confirmation
+
+The transaction result is returned to the customer and seller.
+
+---
+
+## Real-World Scenario
+
+Imagine a small phone-accessories business in Khayelitsha.
+
+A customer asks about a phone case through WhatsApp.
+
+Instead of sending bank details manually, the seller sends a LinkSecure
+Pay payment link.
+
+The customer:
+
+1. Opens the link from WhatsApp
+2. Reviews the product and amount
+3. Completes the payment
+4. Receives confirmation
+
+This keeps the entire sales journey simple and familiar.
+
+---
+
+## Prototype Case Study
+
+![LinkSecure Pay Case Study](docs/linksecure-pay-case-study.png)
+
+---
+
+## Key Objectives
+
+- Enable simple payment collection through WhatsApp
+- Reduce the need to share banking details manually
+- Provide time-limited payment links
+- Create a familiar customer payment experience
+- Support small businesses with accessible digital payment tooling
+- Build a foundation for a scalable payment-link platform
+
+---
+
+## Project Status
+
+**Prototype / Development**
+
+This project is being developed as a payment-link platform prototype,
+with security, API design, transaction handling and deployment
+considerations forming part of the engineering roadmap.
+
+---
+
+## Author
+
+**Mandla Dyonase**  
+Software Developer  
+Cape Town, South Africa
