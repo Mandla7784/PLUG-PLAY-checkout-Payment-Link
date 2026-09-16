@@ -14,7 +14,7 @@ const productPrice = document.getElementById("product-price");
 const checkoutForm = document.getElementById("checkout-form");
 const paymentStatus = document.getElementById("payment-status");
 const payButton = document.getElementById("pay-button");
-
+let currentPaymentLink = null;
 
 //  function for loadig  payment link 
 
@@ -61,20 +61,52 @@ async function loadPaymentLink() {
 checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    paymentStatus.textContent = "Creating payment...";
+    if (!currentPaymentLink) {
+        paymentStatus.textContent = "Payment link is not available.";
+        return;
+    }
 
     payButton.disabled = true;
+    payButton.textContent = "Processing...";
+    paymentStatus.textContent = "";
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/checkout/pay`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idempotency_key: crypto.randomUUID(),
+                    payment_link_token: paymentLinkToken,
+                    amount: 0,
+                    currency: "XXX"
+                })
+            }
+        );
 
-    console.log("Customer:", name, email);
+        const result = await response.json();
 
-    paymentStatus.textContent =
-        "Payment integration ready.";
-    
-    payButton.disabled = false;
+        if (!response.ok) {
+            throw new Error(
+                result.detail || "Payment could not be created"
+            );
+        }
+
+        paymentStatus.textContent =
+            `Payment created successfully. Status: ${result.status}`;
+
+        payButton.textContent = "Payment Pending";
+
+    } catch (error) {
+        paymentStatus.textContent = error.message;
+
+        payButton.disabled = false;
+        payButton.textContent =
+            `Pay ${currentPaymentLink.currency} ${currentPaymentLink.amount}`;
+    }
 });
-
 
 loadPaymentLink();
