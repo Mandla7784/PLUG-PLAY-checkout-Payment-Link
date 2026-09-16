@@ -40,7 +40,7 @@ def create_payment_link_endpoint(
     db: Session = Depends(get_db),
     merchant: Merchant = Depends(get_current_merchant),
 ):
-    payment_link = create_payment_link(db, data)
+    payment_link = create_payment_link(db, data , merchant.id,)
 
     return PaymentLinkResponse(
         id=payment_link.id,
@@ -54,8 +54,6 @@ def create_payment_link_endpoint(
         expires_at=payment_link.expires_at,
         created_at=payment_link.created_at,
     )
-    
-
 
 # endpoint for getting the payment link by token
 
