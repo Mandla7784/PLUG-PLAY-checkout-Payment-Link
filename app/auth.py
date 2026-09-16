@@ -5,6 +5,9 @@ from .database import get_db
 from .models import Merchant
 from .services.api_key_service import get_merchant_by_api_key
 
+
+
+# for reusable authentication dependency
 def get_current_merchant(
     x_api_key: str = Header(..., alias="X-API-Key"),
     db: Session = Depends(get_db),
