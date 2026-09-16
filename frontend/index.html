@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Khayelitsha Store - Checkout</title>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -12,15 +15,27 @@
     <main class="checkout-container">
 
         <section class="store">
+
             <h1>Khayelitsha Store</h1>
-            <p class="subtitle">Secure checkout powered by LinkSecure Pay</p>
+
+            <p class="subtitle">
+                Secure checkout powered by LinkSecure Pay
+            </p>
 
             <div class="product">
-                <h2 id="product-name">Loading product...</h2>
+
+                <h2 id="product-name">
+                    Loading product...
+                </h2>
+
                 <p id="product-description"></p>
+
                 <strong id="product-price"></strong>
+
             </div>
+
         </section>
+
 
         <section class="checkout-card">
 
@@ -28,7 +43,10 @@
 
             <form id="checkout-form">
 
-                <label for="name">Full name</label>
+                <label for="name">
+                    Full name
+                </label>
+
                 <input
                     type="text"
                     id="name"
@@ -36,7 +54,10 @@
                     required
                 >
 
-                <label for="email">Email</label>
+                <label for="email">
+                    Email
+                </label>
+
                 <input
                     type="email"
                     id="email"
@@ -44,24 +65,49 @@
                     required
                 >
 
-                <button type="submit" id="pay-button">
+                <button
+                    type="submit"
+                    id="pay-button"
+                >
                     Pay Now
                 </button>
 
             </form>
 
+
             <div id="payment-status"></div>
-            <div id="payment-success" class="payment-success">
-    <img src="../docs/image.png" alt="Payment Successful">
-    <h2>Payment Successful</h2>
-    <p>Your payment has been processed successfully.</p>
-</div>
+
+
+            <!-- Payment Successful -->
+
+            <div
+                id="payment-success"
+                class="payment-success"
+            >
+
+                <img
+                    src="image.png"
+                    alt="Payment Successful"
+                    class="success-image"
+                >
+
+                <h2>
+                    Payment Successful
+                </h2>
+
+                <p>
+                    Your payment has been processed successfully.
+                </p>
+
+            </div>
 
         </section>
 
     </main>
 
+
     <script src="js/linksecure-pay.js"></script>
 
 </body>
+
 </html>

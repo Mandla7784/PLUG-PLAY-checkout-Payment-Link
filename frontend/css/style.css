@@ -111,10 +111,12 @@ button:hover {
 .payment-success {
     display: none;
     text-align: center;
+    padding: 20px;
 }
 
-.payment-success img {
-    width: 180px;
-    max-width: 100%;
-    margin-bottom: 15px;
+.success-image {
+    display: block;
+    width: 220px;
+    height: auto;
+    margin: 0 auto 20px;
 }

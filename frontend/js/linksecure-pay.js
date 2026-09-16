@@ -1,5 +1,7 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api/v1";
+
 const paymentSuccess = document.getElementById("payment-success");
+
 const paymentLinkToken = new URLSearchParams(
     window.location.search
 ).get("token");
@@ -12,7 +14,6 @@ const paymentStatus = document.getElementById("payment-status");
 const payButton = document.getElementById("pay-button");
 
 let currentPaymentLink = null;
-
 
 async function loadPaymentLink() {
     if (!paymentLinkToken) {
@@ -31,7 +32,9 @@ async function loadPaymentLink() {
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.detail || "Unable to load payment link");
+            throw new Error(
+                result.detail || "Unable to load payment link"
+            );
         }
 
         currentPaymentLink = result;
@@ -52,11 +55,9 @@ async function loadPaymentLink() {
 
         productName.textContent = "Unable to load product";
         productDescription.textContent = error.message;
-
         payButton.disabled = true;
     }
 }
-
 
 checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -79,7 +80,7 @@ checkoutForm.addEventListener("submit", async (event) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-              body: JSON.stringify({
+                body: JSON.stringify({
                     idempotency_key: crypto.randomUUID(),
                     payment_link_token: paymentLinkToken
                 })
@@ -89,25 +90,20 @@ checkoutForm.addEventListener("submit", async (event) => {
         const result = await response.json();
 
         if (!response.ok) {
-           const errorMessage =
-            typeof result.detail === "string"
-        ? result.detail
-        : JSON.stringify(result.detail);
+            const errorMessage =
+                typeof result.detail === "string"
+                    ? result.detail
+                    : JSON.stringify(result.detail);
 
-        throw new Error(
+            throw new Error(
                 errorMessage || "Payment could not be created"
-);
+            );
         }
-if (result.status === "SUCCESS") {
-    checkoutForm.style.display = "none";
-    paymentStatus.style.display = "none";
-    paymentSuccess.style.display = "block";
-} else {
-    paymentStatus.textContent =
-        `Payment created successfully. Status: ${result.status}`;
 
-    payButton.textContent = "Payment Pending";
-}
+        // Show payment successful screen
+        checkoutForm.style.display = "none";
+        paymentStatus.style.display = "none";
+        paymentSuccess.style.display = "block";
 
     } catch (error) {
         console.error("Payment error:", error);
@@ -120,6 +116,5 @@ if (result.status === "SUCCESS") {
             `Pay ${currentPaymentLink.currency} ${currentPaymentLink.amount}`;
     }
 });
-
 
 loadPaymentLink();
