@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khayelitsha Store - Checkout</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="checkout-container">
+
+        <section class="store">
+            <h1>Khayelitsha Store</h1>
+            <p class="subtitle">Secure checkout powered by LinkSecure Pay</p>
+
+            <div class="product">
+                <h2 id="product-name">Loading product...</h2>
+                <p id="product-description"></p>
+                <strong id="product-price"></strong>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+
+            <h2>Checkout</h2>
+
+            <form id="checkout-form">
+
+                <label for="name">Full name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="John Doe"
+                    required
+                >
+
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="john@example.com"
+                    required
+                >
+
+                <button type="submit" id="pay-button">
+                    Pay Now
+                </button>
+
+            </form>
+
+            <div id="payment-status"></div>
+
+        </section>
+
+    </main>
+
+    <script src="js/linksecure-pay.js"></script>
+
+</body>
+</html>
