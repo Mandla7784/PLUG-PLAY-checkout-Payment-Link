@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    container_name: linksecure-pay-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./linksecure_pay.db:/app/linksecure_pay.db
+    restart: unless-stopped
