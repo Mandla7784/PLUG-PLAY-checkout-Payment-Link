@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+tests
+frontend
+docs
+linksecure_pay.db
