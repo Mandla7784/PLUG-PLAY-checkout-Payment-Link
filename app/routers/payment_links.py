@@ -8,16 +8,19 @@ from ..services.payment_link_service import create_payment_link
 
 
 from datetime import datetime, timezone
-
 from ..models import PaymentLink
-
-
 from ..schemas import (
 
     PaymentLinkCreate,
     PaymentLinkResponse,
 
 )
+
+#protection 
+
+from ..auth import get_current_merchant
+from ..models import Merchant
+
 
 
 
@@ -35,6 +38,7 @@ router = APIRouter(
 def create_payment_link_endpoint(
     data: PaymentLinkCreate,
     db: Session = Depends(get_db),
+    merchant: Merchant = Depends(get_current_merchant),
 ):
     payment_link = create_payment_link(db, data)
 
