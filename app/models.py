@@ -138,7 +138,7 @@ class Payment(Base):
         nullable=False,
     )
 #merchnats model 
-class Merchnat(Base):
+class Merchant(Base):
     __tablename__ = "merchants"
     
     id: Mapped[str] = mapped_column(
