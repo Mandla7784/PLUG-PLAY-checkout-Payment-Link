@@ -7,7 +7,7 @@ from .routers.payments import router as payments_router
 from .routers.merchants import router as merchants_router
 # Create database tables
 Base.metadata.create_all(bind=engine)
-
+from .routers.checkout import router as checkout_router
 
 app = FastAPI(
     title="LinkSecure Pay API",
@@ -48,5 +48,11 @@ app.include_router(
 
 app.include_router(
     merchants_router,
+    prefix="/api/v1",
+)
+
+
+app.include_router(
+    checkout_router,
     prefix="/api/v1",
 )
