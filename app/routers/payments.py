@@ -6,6 +6,10 @@ from ..schemas import PaymentCreate, PaymentResponse
 from ..services.payment_service import create_payment, confirm_payment
 
 
+#protetcion 
+from ..auth import get_current_merchant
+from ..models import Merchant
+
 router = APIRouter(
     prefix="/payments",
     tags=["Payments"],
@@ -26,6 +30,7 @@ router = APIRouter(
 def create_payment_endpoint(
     data: PaymentCreate,
     db: Session = Depends(get_db),
+      merchant: Merchant = Depends(get_current_merchant),
 ):
     try:
         payment = create_payment(db, data)

@@ -6,8 +6,6 @@ from .database import get_db
 from .models import Merchant
 from .services.api_key_service import get_merchant_by_api_key
 
-
-
 # for reusable authentication dependency
 
 api_key_header = APIKeyHeader(
