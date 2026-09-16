@@ -137,12 +137,33 @@ class Payment(Base):
         default=utc_now,
         nullable=False,
     )
-
-
-
-
+#merchnats model 
 class Merchnat(Base):
     __tablename__ = "merchants"
+    
+    id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()),
+    )
+
+    name: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    api_key: Mapped[str] = mapped_column(
+        String(64),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utc_now,
+        nullable=False,
+    )
 
  
 
