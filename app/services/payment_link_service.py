@@ -21,18 +21,21 @@ from ..schemas import PaymentLinkCreate
 def create_payment_link(
     db: Session,
     data: PaymentLinkCreate,
+       merchant_id: str,
 ) -> PaymentLink:
     expires_at = datetime.now(timezone.utc) + timedelta(
         minutes=data.expires_in_minutes
     )
 
     payment_link = PaymentLink(
+        merchant_id=merchant_id,
+        expires_at=expires_at,
         product_name=data.product_name,
         description=data.description,
         amount=data.amount,
         currency=data.currency,
         token=secrets.token_urlsafe(12),
-        expires_at=expires_at,
+ 
     )
 
     db.add(payment_link)
