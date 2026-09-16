@@ -33,6 +33,12 @@ class PaymentLink(Base):
         default=lambda: str(uuid.uuid4()),
     )
 
+    merchant_id: Mapped[str] = mapped_column(
+        String(36),
+        nullable=False,
+        index=True,
+    )
+
     product_name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
