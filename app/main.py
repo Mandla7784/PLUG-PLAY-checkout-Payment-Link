@@ -32,3 +32,8 @@ app.include_router(
     payments_router,
     prefix="/api/v1",
 )
+
+app.include_router(
+    merchants_router,
+    prefix="/api/v1",
+)
