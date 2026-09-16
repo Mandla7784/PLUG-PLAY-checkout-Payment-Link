@@ -137,3 +137,13 @@ class Payment(Base):
         default=utc_now,
         nullable=False,
     )
+
+
+
+
+class Merchnat(Base):
+    __tablename__ = "merchants"
+
+ 
+
+
