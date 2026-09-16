@@ -1,12 +1,8 @@
-// api connection 
-
 const API_BASE_URL = "http://127.0.0.1:8000/api/v1";
-
 
 const paymentLinkToken = new URLSearchParams(
     window.location.search
 ).get("token");
-
 
 const productName = document.getElementById("product-name");
 const productDescription = document.getElementById("product-description");
@@ -14,9 +10,8 @@ const productPrice = document.getElementById("product-price");
 const checkoutForm = document.getElementById("checkout-form");
 const paymentStatus = document.getElementById("payment-status");
 const payButton = document.getElementById("pay-button");
-let currentPaymentLink = null;
 
-//  function for loadig  payment link 
+let currentPaymentLink = null;
 
 
 async function loadPaymentLink() {
@@ -33,26 +28,31 @@ async function loadPaymentLink() {
             `${API_BASE_URL}/payment-links/${paymentLinkToken}`
         );
 
+        const result = await response.json();
+
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.detail || "Unable to load payment link");
+            throw new Error(result.detail || "Unable to load payment link");
         }
 
-        const paymentLink = await response.json();
+        currentPaymentLink = result;
 
-        productName.textContent = paymentLink.product_name;
+        productName.textContent = result.product_name;
+
         productDescription.textContent =
-            paymentLink.description || "";
+            result.description || "";
 
         productPrice.textContent =
-            `${paymentLink.currency} ${paymentLink.amount}`;
+            `${result.currency} ${result.amount}`;
 
         payButton.textContent =
-            `Pay ${paymentLink.currency} ${paymentLink.amount}`;
+            `Pay ${result.currency} ${result.amount}`;
 
     } catch (error) {
+        console.error("Payment link error:", error);
+
         productName.textContent = "Unable to load product";
         productDescription.textContent = error.message;
+
         payButton.disabled = true;
     }
 }
@@ -62,7 +62,8 @@ checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (!currentPaymentLink) {
-        paymentStatus.textContent = "Payment link is not available.";
+        paymentStatus.textContent =
+            "Payment link is not available.";
         return;
     }
 
@@ -81,6 +82,9 @@ checkoutForm.addEventListener("submit", async (event) => {
                 body: JSON.stringify({
                     idempotency_key: crypto.randomUUID(),
                     payment_link_token: paymentLinkToken,
+
+                    // Backend ignores these values
+                    // and uses the payment link values.
                     amount: 0,
                     currency: "XXX"
                 })
@@ -101,12 +105,16 @@ checkoutForm.addEventListener("submit", async (event) => {
         payButton.textContent = "Payment Pending";
 
     } catch (error) {
+        console.error("Payment error:", error);
+
         paymentStatus.textContent = error.message;
 
         payButton.disabled = false;
+
         payButton.textContent =
             `Pay ${currentPaymentLink.currency} ${currentPaymentLink.amount}`;
     }
 });
+
 
 loadPaymentLink();
