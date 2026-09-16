@@ -4,7 +4,7 @@ from .database import Base, engine
 from .routers.payment_links import router as payment_links_router
 
 from .routers.payments import router as payments_router
-
+from .routers.merchants import router as merchants_router
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
