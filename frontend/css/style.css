@@ -107,3 +107,14 @@ button:hover {
         margin: 20px auto;
     }
 }
+
+.payment-success {
+    display: none;
+    text-align: center;
+}
+
+.payment-success img {
+    width: 180px;
+    max-width: 100%;
+    margin-bottom: 15px;
+}

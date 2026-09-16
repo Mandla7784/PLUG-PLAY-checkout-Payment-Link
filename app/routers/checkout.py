@@ -17,7 +17,7 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED,
 )
 def checkout_payment(
-    data: PaymentCreate,
+    data: CheckoutPaymentCreate,
     db: Session = Depends(get_db),
 ):
     payment_link = (

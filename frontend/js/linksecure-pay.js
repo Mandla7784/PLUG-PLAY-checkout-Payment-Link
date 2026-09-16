@@ -1,5 +1,5 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api/v1";
-
+const paymentSuccess = document.getElementById("payment-success");
 const paymentLinkToken = new URLSearchParams(
     window.location.search
 ).get("token");
@@ -79,14 +79,9 @@ checkoutForm.addEventListener("submit", async (event) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
+              body: JSON.stringify({
                     idempotency_key: crypto.randomUUID(),
-                    payment_link_token: paymentLinkToken,
-
-                    // Backend ignores these values
-                    // and uses the payment link values.
-                    amount: 0,
-                    currency: "XXX"
+                    payment_link_token: paymentLinkToken
                 })
             }
         );
@@ -103,11 +98,16 @@ checkoutForm.addEventListener("submit", async (event) => {
                 errorMessage || "Payment could not be created"
 );
         }
+if (result.status === "SUCCESS") {
+    checkoutForm.style.display = "none";
+    paymentStatus.style.display = "none";
+    paymentSuccess.style.display = "block";
+} else {
+    paymentStatus.textContent =
+        `Payment created successfully. Status: ${result.status}`;
 
-        paymentStatus.textContent =
-            `Payment created successfully. Status: ${result.status}`;
-
-        payButton.textContent = "Payment Pending";
+    payButton.textContent = "Payment Pending";
+}
 
     } catch (error) {
         console.error("Payment error:", error);
