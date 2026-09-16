@@ -94,9 +94,14 @@ checkoutForm.addEventListener("submit", async (event) => {
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(
-                result.detail || "Payment could not be created"
-            );
+           const errorMessage =
+            typeof result.detail === "string"
+        ? result.detail
+        : JSON.stringify(result.detail);
+
+        throw new Error(
+                errorMessage || "Payment could not be created"
+);
         }
 
         paymentStatus.textContent =

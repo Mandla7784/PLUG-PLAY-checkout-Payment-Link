@@ -91,6 +91,11 @@ class PaymentCreate(BaseModel):
         return value.upper()
 
 
+class CheckoutPaymentCreate(BaseModel):
+    idempotency_key: str = Field(min_length=1, max_length=64)
+    payment_link_token: str = Field(min_length=1, max_length=32)
+
+
 class PaymentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

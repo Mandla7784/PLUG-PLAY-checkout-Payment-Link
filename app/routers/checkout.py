@@ -4,8 +4,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..models import PaymentLink
 from ..services.payment_service import create_payment
-from ..schemas import PaymentCreate
-
+from ..schemas import CheckoutPaymentCreate, PaymentCreate
 
 router = APIRouter(
     prefix="/checkout",
