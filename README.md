@@ -5,6 +5,18 @@
 **Built by Mandla Dyonase**
 
 ---
+**Frontend:**  
+https://plug-play-checkout-payment-link.vercel.app/
+
+**API:**  
+https://linksecure-pay-api.onrender.com
+
+**API Documentation:**  
+https://linksecure-pay-api.onrender.com/docs
+
+
+
+
 
 ## Case Study
 
