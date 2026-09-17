@@ -10,6 +10,7 @@ https://plug-play-checkout-payment-link.vercel.app/
 
 **API:**  
 https://linksecure-pay-api.onrender.com
+must log in on the render infrustructure
 
 **API Documentation:**  
 https://linksecure-pay-api.onrender.com/docs
